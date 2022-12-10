@@ -1,0 +1,19 @@
+.App {
+  text-align: center;
+}
+
+
+
+.nav-active {
+  background-color: white;
+  color: black;
+  display: block;
+  padding: 10px;
+  
+}
+.nav-inactive {
+  background-color: black;
+  color: white;
+  display: block;
+  padding: 10px;
+}
