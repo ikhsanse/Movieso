@@ -28,6 +28,15 @@ export const getSearchMovie = createAsyncThunk(
   }
 );
 
+export const getMovieDetail = createAsyncThunk(
+  "movie/movie-detail",
+  async (data) => {
+    const response = await tmbd.get(data.fetchURL)
+    console.log(response)
+    return response.data
+  }
+)
+
 const movieSlice = createSlice({
   name: "movie",
   initialState: initialState,
@@ -92,10 +101,24 @@ const movieSlice = createSlice({
       .addCase(getSearchMovie.pending, () => {
         console.log("pending...");
       })
+      .addCase(getMovieDetail.fulfilled, (state, action) => {
+        state.movieDetail = {
+          savedMovie: false,
+          watchLater: false,
+          ...action.payload,
+        };
+      })
+      .addCase(getMovieDetail.rejected, () => {
+        console.log("failed to get detail movie");
+      })
+      .addCase(getMovieDetail.pending, () => {
+        console.log("pending detail...");
+      })
   },
 });
 
 export const selectMovieCollection = (state) => state.movie.movieCollection;
 export const selectSearchMovie = (state) => state.movie.searchMovie;
+export const selectDetailMovie = (state) => state.movie.movieDetail;
 
 export default movieSlice.reducer;

@@ -35,7 +35,7 @@ const HomePage = () => {
   }, [requests]);
   return (
     <div className="">
-      <MainHome movies={movie} moviesIndex={moviesIndex}></MainHome>
+      <MainHome movie={movie} moviesIndex={moviesIndex}></MainHome>
       <br/>
       {movies.map((mov, idx) => idx !==5 && <MovieSlider key={idx} collection={mov} index={idx} /> )}
     </div>

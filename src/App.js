@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import Navbar from "./components/Navbar";
 import MovieList from "./pages/MovieList";
+import MovieDetail from "./pages/MovieDetail";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="movie/:list" element={<MovieList/>} />
+        <Route path="movie/detail/:movieId" element={<MovieDetail/>} />
         <Route path="login" element={<LoginPage />} />
       </Routes>
     </div>

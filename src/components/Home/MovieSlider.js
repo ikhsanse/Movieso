@@ -1,21 +1,35 @@
 import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Movie from "./Movie";
 
 const MovieSlider = ({ collection, index }) => {
+  const locations = useLocation();
+  const [moreLable, setMoreLable] = useState(false);
+  const path = locations.pathname.split("/")[2];
+  useEffect(() => {
+    if (path === "detail") {
+      setMoreLable(true);
+    } else {
+      setMoreLable(false);
+    }
+  }, [path]);
   // split function memecah url menjadi array setelah "?"
   // dan mengambil array pertama sebagai nilai untuk variabel url
-  const url = collection.fetchURL?.split('?')[0];
-  // buat kondisi jika terdapat search dalam url maka akan diidentifikasi sebagai url untuk search 
+  const url = collection.fetchURL?.split("?")[0];
+  // buat kondisi jika terdapat search dalam url maka akan diidentifikasi sebagai url untuk search
   // url search digunakan untuk mengambil data seperti data film horor yang dimana pengambilan datanya
-  // harus melalui api search 
-  const link = url?.split("/")[0] === "search" ? 
-  { pathname: `movie/search`, search: `?query=${collection?.title?.toLowerCase()}&rowID=${index}` } : 
-  { pathname: url, search: `?rowID=${index}` };
+  // harus melalui api search
+  const link =
+    url?.split("/")[0] === "search"
+      ? {
+          pathname: `movie/search`,
+          search: `?query=${collection?.title?.toLowerCase()}&rowID=${index}`,
+        }
+      : { pathname: url, search: `?rowID=${index}` };
 
-
-  console.log(url)
   const slideLeft = () => {
     var slider = document.getElementById("slider" + index);
     slider.scrollLeft = slider.scrollLeft - 500;
@@ -30,7 +44,7 @@ const MovieSlider = ({ collection, index }) => {
         <h2 className="text-white font-bold md:text-xl p-4">
           {collection.title}
         </h2>
-        <Link to={link} className="mt-4">
+        <Link to={link} className={`mt-4 ${moreLable ? 'hidden' : 'block'}`}>
           <span className="text-white md:text-xs px-4 cursor-pointer hover:underline">
             Show More...
           </span>
