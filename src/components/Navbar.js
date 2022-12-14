@@ -128,14 +128,21 @@ const Navbar = () => {
       {navbarDrop && (
         <div className="w-full block">
           <ul className="p- mt-4 border border-gray-100">
-            <li className="relative">
-              <BiSearch className="absolute cursor-pointer top-1/2 left-2 transform -translate-y-1/2 text-white text-2xl z-10" />
-              <input
-                type="text"
-                placeholder="Search..."
-                className="h-10 w-full py-2 pl-9 pr-6 align-middle bg-slate-800 text-white"
-              />
-            </li>
+            {!authPath && (
+              <li className="relative">
+                <BiSearch className="absolute cursor-pointer top-1/2 left-2 transform -translate-y-1/2 text-white text-2xl z-10" />
+                <input
+                  onChange={(e) => setSearch(e.target.value)}
+                  value={search}
+                  onKeyPress={(event) => {
+                    event.key === "Enter" && handleSearch();
+                  }}
+                  type="text"
+                  placeholder="Search..."
+                  className="h-10 w-full py-2 pl-9 pr-6 align-middle bg-slate-800 text-white"
+                />
+              </li>
+            )}
             <li>
               <NavLink
                 to="/"

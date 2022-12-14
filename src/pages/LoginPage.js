@@ -10,12 +10,12 @@ const LoginPage = () => {
         alt="/"
       /> */}
       <div className="bg-black/60 fixed top-0 left-0 w-full h-screen"></div>
-      <div className="w-5/12 mx-auto top-[20%] relative">
+      <div className="w-full md:w-8/12 lg:w-5/12 mx-auto top-[20%] relative">
         <div className="w-auto p-5">
-          <div className="w-2/3 mx-auto">
+          <div className="w-full md:w-2/3 mx-auto">
             <p className="text-3xl text-left text-white font-bold">Sign In</p>
           </div>
-          <form action="" className="mx-auto mt-8 w-2/3">
+          <form action="" className="mx-auto mt-8 w-full md:w-2/3">
             <input
               className=" w-full rounded bg-slate-400 h-14 text-xl text-white"
               autoComplete="off"
