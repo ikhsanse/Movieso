@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import MainHome from "../components/Home/MainHome";
 import MovieSlider from "../components/Home/MovieSlider";
 import {
@@ -15,8 +15,6 @@ const MovieDetail = () => {
   const dispatch = useDispatch();
   const detailMovie = useSelector(selectDetailMovie);
   const MovieRecomen = useSelector(selectMovieCollection);
-  const location = useLocation()
-//   console.log(location.toString())
   const { movieId } = useParams();
   const getId = movieId?.split("-")[1];
   const getIndex = movieId?.split("-")[0];
@@ -31,16 +29,21 @@ const MovieDetail = () => {
     dispatch(getMovieCollection(params));
   }, [getId]);
 
+  useEffect(() => {
+    if(detailMovie)
+    document.documentElement.scrollTop = 0;
+  }, []);
+
   return (
     MovieRecomen.length !== 0 && (
-        <>
-          <MainHome index={getIndex} movie={detailMovie} />
-          <MovieSlider
-            index={"5"}
-            collection={MovieRecomen !== undefined ? MovieRecomen[5] : {}}
-          />
-        </>
-      )
+      <>
+        <MainHome index={getIndex} movie={detailMovie} />
+        <MovieSlider
+          index={"5"}
+          collection={MovieRecomen !== undefined ? MovieRecomen[5] : {}}
+        />
+      </>
+    )
   );
 };
 

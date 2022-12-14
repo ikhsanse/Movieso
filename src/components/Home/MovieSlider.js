@@ -7,18 +7,18 @@ import Movie from "./Movie";
 
 const MovieSlider = ({ collection, index }) => {
   const locations = useLocation();
-  const [moreLable, setMoreLable] = useState(false);
+  const [showLabel, setShowLable] = useState(false);
   const path = locations.pathname.split("/")[2];
   useEffect(() => {
     if (path === "detail") {
-      setMoreLable(true);
+      setShowLable(true);
     } else {
-      setMoreLable(false);
+      setShowLable(false);
     }
   }, [path]);
   // split function memecah url menjadi array setelah "?"
   // dan mengambil array pertama sebagai nilai untuk variabel url
-  const url = collection.fetchURL?.split("?")[0];
+  const url = collection?.fetchURL.split("?")[0];
   // buat kondisi jika terdapat search dalam url maka akan diidentifikasi sebagai url untuk search
   // url search digunakan untuk mengambil data seperti data film horor yang dimana pengambilan datanya
   // harus melalui api search
@@ -42,9 +42,9 @@ const MovieSlider = ({ collection, index }) => {
     <>
       <div className="flex flex-row justify-between">
         <h2 className="text-white font-bold md:text-xl p-4">
-          {collection.title}
+          {collection?.title}
         </h2>
-        <Link to={link} className={`mt-4 ${moreLable ? 'hidden' : 'block'}`}>
+        <Link to={link} className={`mt-4 ${showLabel ? 'hidden' : 'block'}`}>
           <span className="text-white md:text-xs px-4 cursor-pointer hover:underline">
             Show More...
           </span>
@@ -60,7 +60,7 @@ const MovieSlider = ({ collection, index }) => {
           id={`slider${index}`}
           className="w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative"
         >
-          {collection.movies.map((movie, idx) => (
+          {collection?.movies.map((movie, idx) => (
             <Movie movie={movie} index={idx} key={idx} />
           ))}
         </div>

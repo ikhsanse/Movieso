@@ -47,7 +47,7 @@ const MovieList = () => {
   };
 
   useEffect(() => {
-    if(movies.length <= 20)
+    if(movies?.length <= 20)
     document.documentElement.scrollTop = 0;
   }, [movies]);
 

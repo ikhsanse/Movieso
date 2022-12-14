@@ -12,6 +12,7 @@ const Navbar = () => {
   const movies = useSelector(selectMovieCollection);
   const [search, setSearch] = useState("");
   const [navbarDrop, setNavbarDrop] = useState(false);
+  const [authPath, setAuthPath] = useState(false);
   // console.log(window.innerWidth);
 
   useEffect(() => {
@@ -45,6 +46,15 @@ const Navbar = () => {
       search: `?query=${search?.toLowerCase()}&rowID=${movies?.length}`,
     });
   };
+
+  // remove search in login or register page
+  useEffect(() => {
+    if (location.pathname === "/login" || location.pathname === "/register") {
+      setAuthPath(true);
+    } else {
+      setAuthPath(false);
+    }
+  }, [location.pathname]);
 
   return (
     <div
@@ -88,19 +98,21 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="flex">
-        <div className="relative mr-2 hidden md:block">
-          <BiSearch className="absolute cursor-pointer top-1/2 left-2 transform -translate-y-1/2 text-white text-2xl z-10" />
-          <input
-            onChange={(e) => setSearch(e.target.value)}
-            value={search}
-            onKeyPress={(event) => {
-              event.key === "Enter" && handleSearch();
-            }}
-            type="text"
-            placeholder="Search..."
-            className="h-9 w-36 focus:w-64 py-2 pl-9 pr-6 align-middle opacity-80 bg-slate-800 ease-in duration-200 text-white"
-          />
-        </div>
+        {!authPath && (
+          <div className="relative mr-2 hidden md:block">
+            <BiSearch className="absolute cursor-pointer top-1/2 left-2 transform -translate-y-1/2 text-white text-2xl z-10" />
+            <input
+              onChange={(e) => setSearch(e.target.value)}
+              value={search}
+              onKeyPress={(event) => {
+                event.key === "Enter" && handleSearch();
+              }}
+              type="text"
+              placeholder="Search..."
+              className="h-9 w-36 focus:w-64 py-2 pl-9 pr-6 align-middle opacity-80 bg-slate-800 ease-in duration-200 text-white"
+            />
+          </div>
+        )}
         <Link to="login">
           <button
             className={`text-white hidden md:block text-sm rounded px-4 py-2 font-bold ${
