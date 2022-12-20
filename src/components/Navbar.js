@@ -3,8 +3,11 @@ import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { BiSearch } from "react-icons/bi";
 import { getSearchMovie, selectMovieCollection } from "../reducers/movieSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useContext } from "react";
+import AuthContext from "../store/context/auth-context";
 
 const Navbar = () => {
+  const authCtx = useContext(AuthContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -14,6 +17,12 @@ const Navbar = () => {
   const [navbarDrop, setNavbarDrop] = useState(false);
   const [authPath, setAuthPath] = useState(false);
   // console.log(window.innerWidth);
+  const userData = localStorage.getItem("userData");
+
+  const logoutHandler = () => {
+    localStorage.clear();
+    window.location.reload();
+  }
 
   useEffect(() => {
     if (window.innerWidth > 640) {
@@ -113,17 +122,33 @@ const Navbar = () => {
             />
           </div>
         )}
-        <Link to="login">
-          <button
-            className={`text-white hidden md:block text-sm rounded px-4 py-2 font-bold ${
-              navbarChange
-                ? "bg-transparent font-bold"
-                : "bg-sky-600 hover:bg-sky-400"
-            }`}
-          >
-            SIGN IN
-          </button>
-        </Link>
+        {!userData && (
+          <Link to="login">
+            <button
+              className={`text-white hidden md:block text-sm rounded px-4 py-2 font-bold ${
+                navbarChange
+                  ? "bg-transparent font-bold"
+                  : "bg-sky-600 hover:bg-sky-400"
+              }`}
+            >
+              SIGN IN
+            </button>
+          </Link>
+        )}
+        {userData && (
+          <div className="flex justify-between">
+            <Link to="/">
+              <button className="text-white hidden md:block text-sm rounded mx-2 px-2 py-2 font-bold hover:text-gray-100 hover:underline">
+                Saved Movie
+              </button>
+            </Link>
+            <div>
+              <button onClick={logoutHandler} className="text-white hidden md:block text-sm rounded px-4 py-2 font-bold bg-red-600 hover:bg-red-400">
+                Sign Out
+              </button>
+            </div>
+          </div>
+        )}
       </div>
       {navbarDrop && (
         <div className="w-full block">
@@ -153,16 +178,43 @@ const Navbar = () => {
                 Home
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="/login"
-                className={({ isActive }) =>
-                  isActive ? "nav-active" : "nav-inactive"
-                }
-              >
-                Sign in
-              </NavLink>
-            </li>
+            {userData && (
+              <li>
+                <NavLink
+                  to="/login"
+                  className={({ isActive }) =>
+                    isActive ? "nav-active" : "nav-inactive"
+                  }
+                >
+                  Saved Movie
+                </NavLink>
+              </li>
+            )}
+            {!userData ? (
+              <li>
+                <NavLink
+                  to="/login"
+                  className={({ isActive }) =>
+                    isActive ? "nav-active" : "nav-inactive"
+                  }
+                >
+                  Sign in
+                </NavLink>
+              </li>
+            ) : (
+              <li>
+                <NavLink
+                  onClick={logoutHandler}
+                  className={({ isActive }) =>
+                    isActive ? "nav-active" : "nav-inactive"
+                  }
+
+                >
+                  Logout
+                </NavLink>
+              </li>
+            )}
+
             <li></li>
           </ul>
         </div>

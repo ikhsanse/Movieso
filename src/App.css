@@ -8,12 +8,12 @@
   background-color: white;
   color: black;
   display: block;
-  padding: 10px;
+  padding: 0.75rem;
   
 }
 .nav-inactive {
   background-color: black;
   color: white;
   display: block;
-  padding: 10px;
+  padding: 0.75rem;
 }

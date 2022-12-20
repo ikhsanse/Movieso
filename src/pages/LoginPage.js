@@ -1,7 +1,32 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import AuthContext from "../store/context/auth-context";
+// import { UserAuth } from "../store/context/auth-context";
 
 const LoginPage = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const authCtx = useContext(AuthContext);
+  const navigate = useNavigate();
+  // const userData = localStorage.getItem("user");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    // console.log(email, "pw = " + password);
+    try {
+      const response = await authCtx.login(email, password);
+      const userData = {
+        name: response.user.displayName,
+        email: response.user.email
+      };
+      localStorage.setItem("userData", JSON.stringify((userData)))
+      // console.log(response.user)
+      navigate('/')
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="h-screen w-full">
       {/* <img
@@ -15,8 +40,12 @@ const LoginPage = () => {
           <div className="w-full md:w-2/3 mx-auto">
             <p className="text-3xl text-left text-white font-bold">Sign In</p>
           </div>
-          <form action="" className="mx-auto mt-8 w-full md:w-2/3">
+          <form
+            onSubmit={handleSubmit}
+            className="mx-auto mt-8 w-full md:w-2/3"
+          >
             <input
+              onChange={(e) => setEmail(e.target.value)}
               className=" w-full rounded bg-slate-400 h-14 text-xl text-white"
               autoComplete="off"
               placeholder="Email"
@@ -25,6 +54,7 @@ const LoginPage = () => {
               id="Uemail"
             />
             <input
+              onChange={(e) => setPassword(e.target.value)}
               className=" w-full mt-3 rounded bg-slate-400 h-14 text-xl text-white"
               autoComplete="off"
               placeholder="Password"
@@ -32,14 +62,13 @@ const LoginPage = () => {
               name="password"
               id="Upass"
             />
+
             <div className=" mt-8 mx-auto">
-              <button
-                type="submit"
-                className="font-bold w-full h-14 rounded bg-sky-600 hover:bg-sky-500 ease-in text-white"
-              >
+              <button className="font-bold w-full h-14 rounded bg-sky-600 hover:bg-sky-500 ease-in text-white">
                 SIGN IN
               </button>
             </div>
+
             {/* <div className="flex my-4 px-2 justify-between items-center text-sm text-gray-400">
               <p>
                 <input className="mr-2" type="checkbox" />
@@ -47,10 +76,12 @@ const LoginPage = () => {
               </p>
               <p>Need Help?</p>
             </div> */}
-            <p className='mt-3'>
-                <span className='text-gray-400'>Don't have an account? </span>{' '}
-                <Link className="text-sky-800 hover:text-sky-500" to='/register'>Sign Up Here</Link>
-              </p>
+            <p className="mt-3">
+              <span className="text-gray-400">Don't have an account? </span>{" "}
+              <Link className="text-sky-800 hover:text-sky-500" to="/register">
+                Sign Up Here
+              </Link>
+            </p>
           </form>
         </div>
       </div>

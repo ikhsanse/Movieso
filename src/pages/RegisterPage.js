@@ -1,7 +1,46 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import AuthContext from "../store/context/auth-context";
 
 const RegisterPage = () => {
+  const authCtx = useContext(AuthContext);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  // console.log(user);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // console.log(email);
+
+    try {
+      const response = await authCtx.register(email, password);
+      const userData = {
+        name: response.user.displayName,
+        email: response.user.email
+      };
+      localStorage.setItem("userData", JSON.stringify((userData)))
+      navigate('/')
+    } catch (error) {
+      let errorMesg = "";
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          errorMesg = "Email Already Exist";
+          break;
+        case "auth/weak-password":
+          errorMesg = "Password cannot be less than 6 character";
+          break;
+        default:
+          errorMesg = "Register Failed";
+          break;
+      }
+      setErrorMsg(errorMesg);
+    }
+  };
+  // console.log(errorMsg)
   return (
     <div className="h-screen w-full">
       {/* <img
@@ -15,8 +54,12 @@ const RegisterPage = () => {
           <div className="w-full md:w-2/3 mx-auto">
             <p className="text-3xl text-left text-white font-bold">Sign Up</p>
           </div>
-          <form action="" className="mx-auto mt-8 w-full md:w-2/3">
+          <form
+            onSubmit={handleSubmit}
+            className="mx-auto mt-8 w-full md:w-2/3"
+          >
             <input
+              onChange={(e) => setEmail(e.target.value)}
               className=" w-full rounded bg-slate-400 h-14 text-xl text-white"
               autoComplete="off"
               placeholder="Email"
@@ -25,6 +68,7 @@ const RegisterPage = () => {
               id="Uemail"
             />
             <input
+              onChange={(e) => setPassword(e.target.value)}
               className=" w-full mt-3 rounded bg-slate-400 h-14 text-xl text-white"
               autoComplete="off"
               placeholder="Password"
@@ -48,7 +92,9 @@ const RegisterPage = () => {
                   <p>Need Help?</p>
                 </div> */}
             <p className="mt-3">
-              <span className="text-gray-400">Already have Movieso account? </span>{" "}
+              <span className="text-gray-400">
+                Already have Movieso account?{" "}
+              </span>{" "}
               <Link className="text-sky-800 hover:text-sky-500" to="/login">
                 Sign In Here
               </Link>
