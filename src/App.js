@@ -7,6 +7,7 @@ import MovieList from "./pages/MovieList";
 import MovieDetail from "./pages/MovieDetail";
 import RegisterPage from "./pages/RegisterPage";
 import { AuthContextProvider } from "./store/context/auth-context";
+import MyShow from "./pages/MyShow";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="movie/detail/:movieId" element={<MovieDetail />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
+          <Route path="myshow" element={<MyShow />} />
         </Routes>
       </div>
     </AuthContextProvider>

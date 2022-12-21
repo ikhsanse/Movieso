@@ -137,9 +137,9 @@ const Navbar = () => {
         )}
         {userData && (
           <div className="flex justify-between">
-            <Link to="/">
+            <Link to="/myshow">
               <button className="text-white hidden md:block text-sm rounded mx-2 px-2 py-2 font-bold hover:text-gray-100 hover:underline">
-                Saved Movie
+                My Show
               </button>
             </Link>
             <div>
@@ -181,12 +181,12 @@ const Navbar = () => {
             {userData && (
               <li>
                 <NavLink
-                  to="/login"
+                  to="/myshow"
                   className={({ isActive }) =>
                     isActive ? "nav-active" : "nav-inactive"
                   }
                 >
-                  Saved Movie
+                  My Show
                 </NavLink>
               </li>
             )}

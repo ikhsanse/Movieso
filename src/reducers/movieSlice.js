@@ -41,19 +41,9 @@ const movieSlice = createSlice({
   name: "movie",
   initialState: initialState,
   reducers: {
-    SAVEDMOVIE: (state, action) => {
-      const index = action.payload.index;
-      const idMovie = action.payload.id;
-      const indexMovie = state.movieCollection[index].movies.findIndex(
-        (idx) => {
-          return idx.id === idMovie;
-        }
-      );
-      const status = state.movieCollection[index].movies[indexMovie].savedMovie;
-      state.movieCollection[index].movies[indexMovie].savedMovie = !status;
-    },
     WATCHLATER: (state, action) => {
-      const index = action.payload.index;
+      const index = action.payload.movieIndex;
+      // console.log(index)
       const idMovie = action.payload.id;
       const indexMovie = state.movieCollection[index].movies.findIndex(
         (idx) => {
@@ -70,7 +60,6 @@ const movieSlice = createSlice({
       .addCase(getMovieCollection.fulfilled, (state, action) => {
         let addMarksParam = action.payload?.map((mark) => ({
           ...mark,
-          savedMovie: false,
           watchLater: false,
         }));
         state.movieCollection[action.meta.arg.rowID] = {
@@ -103,7 +92,6 @@ const movieSlice = createSlice({
       })
       .addCase(getMovieDetail.fulfilled, (state, action) => {
         state.movieDetail = {
-          savedMovie: false,
           watchLater: false,
           ...action.payload,
         };
@@ -116,6 +104,8 @@ const movieSlice = createSlice({
       })
   },
 });
+
+export const { WATCHLATER } = movieSlice.actions;
 
 export const selectMovieCollection = (state) => state.movie.movieCollection;
 export const selectSearchMovie = (state) => state.movie.searchMovie;

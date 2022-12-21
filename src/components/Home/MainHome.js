@@ -1,7 +1,22 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectWatchLater } from "../../reducers/acountSlice";
+import { WATCHLATER } from "../../reducers/movieSlice";
+import { UPDATEWATCHLATER } from "../../reducers/acountSlice";
+import { BsCheckLg } from "react-icons/bs"
 
 const MainHome = (props) => {
-//   console.log(props.movies);
+  // console.log();
+  const movieIndex = props.moviesIndex;
+
+  const movie = props.movie;
+  console.log(movieIndex)
+  const userData = localStorage.getItem('userData')
+  // console.log(userData.email)
+  const dispatch = useDispatch();
+  const getWatchLater = useSelector(selectWatchLater);
+  // console.log(getWatchLater)
+
   const truncateString = (str, num) => {
     if (str?.length > num) {
       return str.slice(0, num) + "...";
@@ -9,6 +24,17 @@ const MainHome = (props) => {
       return str;
     }
   };
+
+  const checkWatchLater = getWatchLater?.movies?.filter((item) => item.id === movie?.id);
+
+  const watchLater = () => {
+    if (userData) {
+      dispatch(WATCHLATER({movieIndex, id: movie.id}));
+      dispatch(UPDATEWATCHLATER({...movie, watchLater: !movie.watchLater, rowID: movieIndex}));
+    } else {
+      alert('Please log in to save a movie');
+    }
+  }
   return (
     <div className="w-full h-[600px] text-white">
       <div className="w-full h-full">
@@ -26,8 +52,8 @@ const MainHome = (props) => {
             >
               Play
             </button>
-            <button  className="border flex flex-row text-white border-gray-300 py-2 px-5 ml-4 hover:bg-gray-300 hover:text-black">
-              {/* {checkWatchLater?.length !== 0 && <BsCheckLg className="text-white mr-3 mt-1" />} */}
+            <button onClick={watchLater} className="border flex flex-row text-white border-gray-300 py-2 px-5 ml-4 hover:bg-gray-300 hover:text-black">
+              {checkWatchLater?.length !== 0 && <BsCheckLg className="text-white mr-3 mt-1" />}
               Watch Later
             </button>
           </div>
