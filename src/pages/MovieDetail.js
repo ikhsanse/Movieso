@@ -30,14 +30,14 @@ const MovieDetail = () => {
   }, [getId]);
 
   useEffect(() => {
-    if(detailMovie)
-    document.documentElement.scrollTop = 0;
-  }, []);
+    if(movieId)
+    window.scrollTo(0,0);
+  }, [movieId]);
 
   return (
     MovieRecomen.length !== 0 && (
       <>
-        <MainHome index={getIndex} movie={detailMovie} />
+        <MainHome moviesIndex={getIndex} movie={detailMovie} />
         <MovieSlider
           index={"5"}
           collection={MovieRecomen !== undefined ? MovieRecomen[5] : {}}

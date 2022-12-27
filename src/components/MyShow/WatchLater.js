@@ -7,7 +7,7 @@ import MyMovie from './MyMovie';
 
 const WatchLater = (props) => {
   // console.log(movie)
-  const watchLater = useSelector(selectWatchLater);
+  // const watchLater = useSelector(selectWatchLater);
   // console.log(watchLater.movies)
   const slideLeft = () => {
     var slider = document.getElementById("slider");

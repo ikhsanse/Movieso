@@ -1,9 +1,14 @@
 import React from 'react'
 import WatchLater from '../components/MyShow/WatchLater';
 import wallpaper from '../assets/wallpaper.jpg';
+import { useSelector } from 'react-redux';
+import { selectWatchLater } from '../reducers/acountSlice';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
-const MyShow = () => {
-    const watchLater = JSON.parse(localStorage.getItem('watchLater'));
+const MyShow = () => {  
+    // const watchLater = useSelector(selectWatchLater)
+    const watchLater = JSON.parse(localStorage.getItem('watchLater'))
     return (
       <div className='bg-black'>
         <div className='w-full text-white'>

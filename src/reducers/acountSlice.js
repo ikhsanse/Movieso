@@ -3,7 +3,7 @@ import {  createSlice } from "@reduxjs/toolkit";
 const initialState = {
   watchLater: {
     rowID: 1,
-    title: "Watch Later",
+    title: "Watch List",
     movies: [],
   },
 };
@@ -14,7 +14,9 @@ const accountReducer = createSlice({
   reducers: {
     UPDATEWATCHLATER: (state, action) => {
       if (action.payload.remove === true) {
+        console.log(action.payload)
         state.watchLater.movies = action.payload.movies;
+        // localStorage.setItem('watchLater', JSON.stringify(state.watchLater))
       } else {
         state.watchLater.movies.push(action.payload);
       }

@@ -9,12 +9,13 @@ const baseImg = process.env.REACT_APP_IMAGE_500_END_POINT;
 const MyMovie = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const watchLater = useSelector(selectWatchLater);
+  // const watchLater = useSelector(selectWatchLater);
+  const watchLater = JSON.parse(localStorage.getItem('watchLater'))
   const remove = (id) => {
     const newWatchLater = watchLater?.movies.filter(
       (movie) => movie.id !== id
     );
-    dispatch(UPDATEWATCHLATER({ remove: true, movies: newWatchLater || [] }));
+    dispatch(UPDATEWATCHLATER({ remove: true, movies: newWatchLater }));
     window.location.reload()
   };
   return (
@@ -24,7 +25,7 @@ const MyMovie = (props) => {
     >
       <img
         className="w-full h-auto block"
-        src={`${baseImg}${props.movie?.backdrop_path}`}
+        src={`${baseImg}${props.movie?.poster_path}`}
         alt={props.movie?.title}
       />
       <div className="absolute top-0 left-0 w-full h-full hover:bg-black/80 opacity-0 hover:opacity-100 text-white">
