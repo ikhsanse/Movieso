@@ -8,6 +8,8 @@ import MovieDetail from "./pages/MovieDetail";
 import RegisterPage from "./pages/RegisterPage";
 import { AuthContextProvider } from "./store/context/auth-context";
 import MyShow from "./pages/MyShow";
+import '../node_modules/react-modal-video/scss/modal-video.scss';
+
 
 function App() {
   return (

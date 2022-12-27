@@ -15,6 +15,7 @@ const MyMovie = (props) => {
       (movie) => movie.id !== id
     );
     dispatch(UPDATEWATCHLATER({ remove: true, movies: newWatchLater || [] }));
+    window.location.reload()
   };
   return (
     <div

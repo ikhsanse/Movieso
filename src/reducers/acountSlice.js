@@ -18,9 +18,9 @@ const accountReducer = createSlice({
       } else {
         state.watchLater.movies.push(action.payload);
       }
+      localStorage.setItem('watchLater', JSON.stringify(state.watchLater))
     },
     EMPTYACCOUNT: (state, action) => {
-      state.savedMovie.movies = [];
       state.watchLater.movies = [];
     },
   },
