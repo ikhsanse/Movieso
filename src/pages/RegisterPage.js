@@ -3,9 +3,12 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../store/context/auth-context";
 
+import ErrorAlert from "../components/ErrorAlert";
+
 const RegisterPage = () => {
   const authCtx = useContext(AuthContext);
   const [errorMsg, setErrorMsg] = useState("");
+  const [errorStatus, setErrorStatus] = useState(false)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -25,7 +28,7 @@ const RegisterPage = () => {
       localStorage.setItem("userData", JSON.stringify((userData)))
       navigate('/')
     } catch (error) {
-      let errorMesg = "";
+      let errorMesg;
       switch (error.code) {
         case "auth/email-already-in-use":
           errorMesg = "Email Already Exist";
@@ -38,9 +41,13 @@ const RegisterPage = () => {
           break;
       }
       setErrorMsg(errorMesg);
+      setErrorStatus(true)
     }
   };
   // console.log(errorMsg)
+  const closeError = () => {
+    setErrorStatus(false)
+  }
   return (
     <div className="h-screen w-full">
       {/* <img
@@ -83,6 +90,8 @@ const RegisterPage = () => {
               >
                 SIGN UP
               </button>
+              {errorStatus ? <ErrorAlert errorMsg={errorMsg} onAlertClose={closeError}/> : null}
+              
             </div>
             {/* <div className="flex my-4 px-2 justify-between items-center text-sm text-gray-400">
                   <p>

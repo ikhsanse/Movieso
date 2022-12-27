@@ -35,8 +35,9 @@ const MainHome = (props) => {
     // console.log(movie)
     const getVideo = async () => {
       // console.log(movie.id)
-      let response = await tmbd.get(`movie/${movie.id}/videos`);
-      setTrailer(response.data?.results[0].key)
+      const response = await tmbd.get(`movie/${movie.id}/videos`);
+      const key = response.data?.results[0].key
+      setTrailer(key)
     }
     if(!movie) {
       setIsLoading(true)

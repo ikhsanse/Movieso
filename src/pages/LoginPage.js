@@ -3,10 +3,13 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../store/context/auth-context";
 // import { UserAuth } from "../store/context/auth-context";
+import ErrorAlert from "../components/ErrorAlert";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMSg] = useState("");
+  const [errorStatus, setErrorStatus] = useState(false);
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
   // const userData = localStorage.getItem("user");
@@ -18,15 +21,19 @@ const LoginPage = () => {
       const response = await authCtx.login(email, password);
       const userData = {
         name: response.user.displayName,
-        email: response.user.email
+        email: response.user.email,
       };
-      localStorage.setItem("userData", JSON.stringify((userData)))
+      localStorage.setItem("userData", JSON.stringify(userData));
       // console.log(response.user)
-      navigate('/')
+      navigate("/");
     } catch (error) {
-      console.log(error);
+      setErrorMSg("Incorrect username or password");
+      setErrorStatus(true)
     }
   };
+  const closeError = () => {
+    setErrorStatus(false)
+  }
   return (
     <div className="h-screen w-full">
       {/* <img
@@ -68,6 +75,7 @@ const LoginPage = () => {
                 SIGN IN
               </button>
             </div>
+            {errorStatus ? <ErrorAlert errorMsg={errorMsg} onAlertClose={closeError} /> : null}
 
             {/* <div className="flex my-4 px-2 justify-between items-center text-sm text-gray-400">
               <p>
