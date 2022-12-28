@@ -3,8 +3,8 @@ import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { BiSearch } from "react-icons/bi";
 import { getSearchMovie, selectMovieCollection } from "../reducers/movieSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useContext } from "react";
-import AuthContext from "../store/context/auth-context";
+// import { useContext } from "react";
+// import AuthContext from "../store/context/auth-context";
 
 const Navbar = () => {
   // const authCtx = useContext(AuthContext);
