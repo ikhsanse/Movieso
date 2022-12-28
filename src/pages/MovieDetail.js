@@ -32,6 +32,7 @@ const MovieDetail = () => {
       title: "Recomendations for you",
     };
     dispatch(getMovieCollection(params));
+// eslint-disable-next-line
   }, [movieId]);
 
   useEffect(() => {

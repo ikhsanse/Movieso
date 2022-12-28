@@ -1,8 +1,5 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { selectWatchLater } from '../../reducers/acountSlice'
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
-import { Link, useLocation } from "react-router-dom";
 import MyMovie from './MyMovie';
 
 const WatchLater = (props) => {
