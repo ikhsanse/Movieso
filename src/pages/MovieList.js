@@ -38,6 +38,7 @@ const MovieList = () => {
         })
       );
     }
+    // eslint-disable-next-line
   }, [queryChange, fetchURL]);
 
   const nextPage = () => {

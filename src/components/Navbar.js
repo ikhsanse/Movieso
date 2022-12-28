@@ -7,7 +7,7 @@ import { useContext } from "react";
 import AuthContext from "../store/context/auth-context";
 
 const Navbar = () => {
-  const authCtx = useContext(AuthContext);
+  // const authCtx = useContext(AuthContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
