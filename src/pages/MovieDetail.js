@@ -12,6 +12,7 @@ import {
 } from "../reducers/movieSlice";
 
 const MovieDetail = () => {
+  document.title = "Movieso | Movie Detail";
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const MovieRecomen = useSelector(selectMovieCollection);

@@ -6,6 +6,7 @@ import AuthContext from "../store/context/auth-context";
 import ErrorAlert from "../components/ErrorAlert";
 
 const LoginPage = () => {
+  document.title = "Movieso | Sign In";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMSg] = useState("");

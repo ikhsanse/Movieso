@@ -6,6 +6,7 @@ import AuthContext from "../store/context/auth-context";
 import ErrorAlert from "../components/ErrorAlert";
 
 const RegisterPage = () => {
+  document.title = "Movieso | Sign Up";
   const authCtx = useContext(AuthContext);
   const [errorMsg, setErrorMsg] = useState("");
   const [errorStatus, setErrorStatus] = useState(false)

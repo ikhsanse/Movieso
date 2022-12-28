@@ -9,6 +9,7 @@ import MainHome from "../components/Home/MainHome";
 import MovieSlider from "../components/Home/MovieSlider";
 
 const HomePage = () => {
+  document.title = "Movieso";
   
   const movies = useSelector(selectMovieCollection);
   // console.log(movies)

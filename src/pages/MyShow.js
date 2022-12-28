@@ -6,6 +6,7 @@ import { selectWatchLater } from '../reducers/acountSlice';
 
 
 const MyShow = () => {  
+  document.title ="Movieso | MyShow"
     const watchLater = useSelector(selectWatchLater)
     // const watchLater = JSON.parse(localStorage.getItem('watchLater'))
     return (
