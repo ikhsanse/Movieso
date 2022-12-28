@@ -9,14 +9,14 @@ const baseImg = process.env.REACT_APP_IMAGE_500_END_POINT;
 const MyMovie = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const watchLater = useSelector(selectWatchLater);
-  const watchLater = JSON.parse(localStorage.getItem('watchLater'))
+  const watchLater = useSelector(selectWatchLater);
+  // const watchLater = JSON.parse(localStorage.getItem('watchLater'))
   const remove = (id) => {
     const newWatchLater = watchLater?.movies.filter(
       (movie) => movie.id !== id
     );
-    dispatch(UPDATEWATCHLATER({ remove: true, movies: newWatchLater }));
-    window.location.reload()
+    dispatch(UPDATEWATCHLATER({remove: true, movies: newWatchLater || []}));
+    // window.location.reload()
   };
   return (
     <div

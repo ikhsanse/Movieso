@@ -3,12 +3,12 @@ import {  createSlice } from "@reduxjs/toolkit";
 const initialState = {
   watchLater: {
     rowID: 1,
-    title: "Watch List",
+    title: "Watch Later",
     movies: [],
   },
 };
 
-const accountReducer = createSlice({
+const accountSlice = createSlice({
   name: "account",
   initialState,
   reducers: {
@@ -29,9 +29,9 @@ const accountReducer = createSlice({
 });
 
 export const { UPDATEWATCHLATER, EMPTYACCOUNT } =
-  accountReducer.actions;
+  accountSlice.actions;
 
 export const selectSavedMovie = (state) => state.account.savedMovie;
 export const selectWatchLater = (state) => state.account.watchLater;
 
-export default accountReducer.reducer;
+export default accountSlice.reducer;

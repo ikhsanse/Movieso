@@ -18,6 +18,7 @@ const MainHome = (props) => {
   const movieIndex = props.moviesIndex;
 
   const movie = props.movie;
+  // console.log(movie.id)
 
   // console.log(movieId)
   // console.log(movieIndex)
@@ -25,6 +26,7 @@ const MainHome = (props) => {
   // console.log(userData.email)
   const dispatch = useDispatch();
   const getWatchLater = useSelector(selectWatchLater);
+  // const getWatchLater = JSON.parse(localStorage.getItem('watchLater'))
   // console.log(getWatchLater)
 
   const openModal = () => {
@@ -58,8 +60,9 @@ const MainHome = (props) => {
   const checkWatchLater = getWatchLater?.movies?.filter((item) => item.id === movie?.id);
 
   const watchLater = () => {
+    console.log(movieIndex)
     if (userData) {
-      dispatch(WATCHLATER({movieIndex, id: movie.id}));
+      dispatch(WATCHLATER({movieIndex, id: movie?.id}));
       dispatch(UPDATEWATCHLATER({...movie, watchLater: !movie.watchLater, rowID: movieIndex}));
     } else {
       alert('Please log in to save a movie');

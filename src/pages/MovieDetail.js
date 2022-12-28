@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import MainHome from "../components/Home/MainHome";
 import MovieSlider from "../components/Home/MovieSlider";
 import {
@@ -13,12 +13,17 @@ import {
 
 const MovieDetail = () => {
   const dispatch = useDispatch();
-  const detailMovie = useSelector(selectDetailMovie);
+  const navigate = useNavigate()
   const MovieRecomen = useSelector(selectMovieCollection);
+  const detailMovie = useSelector(selectDetailMovie);
+  console.log(MovieRecomen)
   const { movieId } = useParams();
   const getId = movieId?.split("-")[1];
   const getIndex = movieId?.split("-")[0];
   useEffect(() => {
+    if (MovieRecomen.length === 0) {
+      navigate("/");
+    }
     const url = `movie/${getId}`;
     dispatch(getMovieDetail({ fetchURL: url }));
     const params = {
@@ -27,7 +32,7 @@ const MovieDetail = () => {
       title: "Recomendations for you",
     };
     dispatch(getMovieCollection(params));
-  }, [getId]);
+  }, [movieId]);
 
   useEffect(() => {
     if(movieId)
