@@ -12,6 +12,7 @@ import '../node_modules/react-modal-video/scss/modal-video.scss';
 
 
 function App() {
+  document.title = "Movieso"
   return (
     <AuthContextProvider>
       <div className="bg-black">

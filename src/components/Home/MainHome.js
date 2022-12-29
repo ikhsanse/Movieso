@@ -65,7 +65,7 @@ const MainHome = (props) => {
       dispatch(WATCHLATER({movieIndex, id: movie?.id}));
       dispatch(UPDATEWATCHLATER({...movie, watchLater: !movie.watchLater, rowID: movieIndex}));
     } else {
-      alert('Please log in to save a movie');
+      alert('Please Sign In to save a movie');
     }
   }
   return (
