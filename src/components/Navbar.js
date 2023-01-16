@@ -65,6 +65,12 @@ const Navbar = () => {
     }
   }, [location.pathname]);
 
+  // close navbar after clicking mobile size
+
+  const closeNavbar = () => {
+    setNavbarDrop(false)
+  }
+
   return (
     <div
       className={`md:flex justify-between fixed w-full z-[100] ease-in duration-200 ${
@@ -168,7 +174,7 @@ const Navbar = () => {
                 />
               </li>
             )}
-            <li>
+            <li onClick={closeNavbar}>
               <NavLink
                 to="/"
                 className={({ isActive }) =>
@@ -179,7 +185,7 @@ const Navbar = () => {
               </NavLink>
             </li>
             {userData && (
-              <li>
+              <li onClick={closeNavbar}>
                 <NavLink
                   to="/myshow"
                   className={({ isActive }) =>
@@ -191,7 +197,7 @@ const Navbar = () => {
               </li>
             )}
             {!userData ? (
-              <li>
+              <li onClick={closeNavbar}>
                 <NavLink
                   to="/login"
                   className={({ isActive }) =>
@@ -202,7 +208,7 @@ const Navbar = () => {
                 </NavLink>
               </li>
             ) : (
-              <li>
+              <li onClick={closeNavbar}>
                 <NavLink
                   onClick={logoutHandler}
                   className={({ isActive }) =>
