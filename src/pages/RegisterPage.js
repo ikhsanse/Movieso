@@ -4,12 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../store/context/auth-context";
 
 import ErrorAlert from "../components/ErrorAlert";
+import ShowPassword from "../components/ShowPassword";
 
 const RegisterPage = () => {
   document.title = "Movieso | Sign Up";
+  const [passwodType, setPasswordType] = useState("password");
   const authCtx = useContext(AuthContext);
   const [errorMsg, setErrorMsg] = useState("");
-  const [errorStatus, setErrorStatus] = useState(false)
+  const [errorStatus, setErrorStatus] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -24,10 +26,10 @@ const RegisterPage = () => {
       const response = await authCtx.register(email, password);
       const userData = {
         name: response.user.displayName,
-        email: response.user.email
+        email: response.user.email,
       };
-      localStorage.setItem("userData", JSON.stringify((userData)))
-      navigate('/')
+      localStorage.setItem("userData", JSON.stringify(userData));
+      navigate("/");
     } catch (error) {
       let errorMesg;
       switch (error.code) {
@@ -42,12 +44,17 @@ const RegisterPage = () => {
           break;
       }
       setErrorMsg(errorMesg);
-      setErrorStatus(true)
+      setErrorStatus(true);
     }
   };
   // console.log(errorMsg)
   const closeError = () => {
-    setErrorStatus(false)
+    setErrorStatus(false);
+  };
+
+  // show password
+  const changePasswordType = (type) => {
+    setPasswordType(type)
   }
   return (
     <div className="h-screen w-full">
@@ -68,22 +75,25 @@ const RegisterPage = () => {
           >
             <input
               onChange={(e) => setEmail(e.target.value)}
-              className=" w-full rounded bg-slate-400 h-14 text-xl text-white"
-              autoComplete="off"
+              className=" w-full rounded bg-slate-400 h-14 text-xl"
+              autocomplete="off"
               placeholder="Email"
               type="email"
               name="email"
               id="Uemail"
             />
-            <input
-              onChange={(e) => setPassword(e.target.value)}
-              className=" w-full mt-3 rounded bg-slate-400 h-14 text-xl text-white"
-              autoComplete="off"
-              placeholder="Password"
-              type="password"
-              name="password"
-              id="Upass"
-            />
+            <div className="relative flex">
+              <input
+                onChange={(e) => setPassword(e.target.value)}
+                className=" w-full mt-3 rounded bg-slate-400 h-14 text-xl"
+                autocomplete="off"
+                placeholder="Password"
+                type={passwodType}
+                name="password"
+                id="Upass"
+              />
+              <ShowPassword onChangeType={changePasswordType} />
+            </div>
             <div className=" mt-8 mx-auto">
               <button
                 type="submit"
@@ -91,8 +101,9 @@ const RegisterPage = () => {
               >
                 SIGN UP
               </button>
-              {errorStatus ? <ErrorAlert errorMsg={errorMsg} onAlertClose={closeError}/> : null}
-              
+              {errorStatus ? (
+                <ErrorAlert errorMsg={errorMsg} onAlertClose={closeError} />
+              ) : null}
             </div>
             {/* <div className="flex my-4 px-2 justify-between items-center text-sm text-gray-400">
                   <p>

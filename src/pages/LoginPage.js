@@ -4,9 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../store/context/auth-context";
 // import { UserAuth } from "../store/context/auth-context";
 import ErrorAlert from "../components/ErrorAlert";
+import ShowPassword from "../components/ShowPassword";
 
 const LoginPage = () => {
   document.title = "Movieso | Sign In";
+  const [passwodType, setPasswordType] = useState('password')
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMSg] = useState("");
@@ -29,11 +31,15 @@ const LoginPage = () => {
       navigate("/");
     } catch (error) {
       setErrorMSg("Incorrect username or password");
-      setErrorStatus(true)
+      setErrorStatus(true);
     }
   };
   const closeError = () => {
-    setErrorStatus(false)
+    setErrorStatus(false);
+  };
+
+  const changePasswordType = (type) => {
+    setPasswordType(type)
   }
   return (
     <div className="h-screen w-full">
@@ -54,29 +60,34 @@ const LoginPage = () => {
           >
             <input
               onChange={(e) => setEmail(e.target.value)}
-              className=" w-full rounded bg-slate-400 h-14 text-xl text-white"
+              className=" w-full rounded bg-slate-400 h-14 text-xl"
               autoComplete="off"
               placeholder="Email"
               type="email"
               name="email"
               id="Uemail"
             />
-            <input
-              onChange={(e) => setPassword(e.target.value)}
-              className=" w-full mt-3 rounded bg-slate-400 h-14 text-xl text-white"
-              autoComplete="off"
-              placeholder="Password"
-              type="password"
-              name="password"
-              id="Upass"
-            />
+            <div className="relative flex">
+              <input
+                onChange={(e) => setPassword(e.target.value)}
+                className=" w-full mt-3 rounded bg-slate-400 h-14 text-xl"
+                autoComplete="off"
+                placeholder="Password"
+                type={passwodType}
+                name="password"
+                id="Upass"
+              />
+              <ShowPassword onChangeType={changePasswordType}/>
+            </div>
 
             <div className=" mt-8 mx-auto">
               <button className="font-bold w-full h-14 rounded bg-sky-600 hover:bg-sky-500 ease-in text-white">
                 SIGN IN
               </button>
             </div>
-            {errorStatus ? <ErrorAlert errorMsg={errorMsg} onAlertClose={closeError} /> : null}
+            {errorStatus ? (
+              <ErrorAlert errorMsg={errorMsg} onAlertClose={closeError} />
+            ) : null}
 
             {/* <div className="flex my-4 px-2 justify-between items-center text-sm text-gray-400">
               <p>
